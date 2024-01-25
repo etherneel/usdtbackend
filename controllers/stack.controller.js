@@ -10,7 +10,6 @@ const post_steck_amount = async (req,res) =>{
     }
 }
 
-
 const get_steck_amount = async (req, res) =>{
     try {
         let  flag = await stackModel.find({user_id:req.query.user_id});

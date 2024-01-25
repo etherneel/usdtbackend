@@ -37,7 +37,7 @@ let plan_post_controller = async(req,res) =>{
             if(Number(parentMaxObject1.amount) >= Number(value)){
                 await res1.updateOne( {$inc:{bonus : value*0.5} , details:[...res1.details , { amount : value*0.5 , level:1 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res1.updateOne( {$inc:{bonus : value*0.5} , details:[...res1.details , { amount : value*0.5 , level:1 , wallet_address: req.body.user_wallet ,status:"Missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res1.updateOne( {details:[...res1.details , { amount : value*0.5 , level:1 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res2 = await userChainModel.findOne({address : res1.refferralBy }) ;
             if(!res2){
@@ -49,7 +49,7 @@ let plan_post_controller = async(req,res) =>{
             if(Number(parentMaxObject2.amount) >= Number(value)){
                 await res2.updateOne( {$inc:{bonus : value*0.2} , details:[...res2.details , { amount : value*0.2 , level:2 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res2.updateOne( {$inc:{bonus : value*0.2} , details:[...res2.details , { amount : value*0.2 , level:2 , wallet_address: req.body.user_wallet ,status:"Missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res2.updateOne( {details:[...res2.details , { amount : value*0.2 , level:2 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res3 = await userChainModel.findOne({address : res2.refferralBy }) ;
             if(!res3){
@@ -61,7 +61,7 @@ let plan_post_controller = async(req,res) =>{
             if(Number(parentMaxObject3.amount) >= Number(value)){
                 await res3.updateOne( {$inc:{bonus : value*0.1} , details:[...res3.details , { amount : value*0.1 , level:3 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res3.updateOne( {$inc:{bonus : value*0.1} , details:[...res3.details , { amount : value*0.1 , level:3 , wallet_address: req.body.user_wallet ,status:"Missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res3.updateOne( {details:[...res3.details , { amount : value*0.1 , level:3 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res4 = await userChainModel.findOne({address : res3.refferralBy })
             if(!res4){
@@ -73,7 +73,7 @@ let plan_post_controller = async(req,res) =>{
             if(Number(parentMaxObject4.amount) >= Number(value)){
                 await res4.updateOne( {$inc:{bonus : value*0.05} , details:[...res4.details , { amount : value*0.05 , level:4 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res4.updateOne( {$inc:{bonus : value*0.05} , details:[...res4.details , { amount : value*0.05 , level:4 , wallet_address: req.body.user_wallet ,status:"Missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res4.updateOne( {details:[...res4.details , { amount : value*0.05 , level:4 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res5 = await userChainModel.findOne({address : res4.refferralBy })
             if(!res5){
@@ -85,7 +85,7 @@ let plan_post_controller = async(req,res) =>{
             if(Number(parentMaxObject5.amount) >= Number(value)){
                 await res5.updateOne( {$inc:{bonus : value*0.05} , details:[...res5.details , { amount : value*0.05 , level:5 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res5.updateOne( {$inc:{bonus : value*0.05} , details:[...res5.details , { amount : value*0.05 , level:5 , wallet_address: req.body.user_wallet ,status:"Missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res5.updateOne( {details:[...res5.details , { amount : value*0.05 , level:5 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res6 = await userChainModel.findOne({address : res5.refferralBy })
             if(!res6){
@@ -97,7 +97,7 @@ let plan_post_controller = async(req,res) =>{
             if(Number(parentMaxObject6.amount) >= Number(value)){
                 await res6.updateOne( {$inc:{bonus : value*0.04} , details:[...res6.details , { amount : value*0.04 , level:6 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res6.updateOne( {$inc:{bonus : value*0.04} , details:[...res6.details , { amount : value*0.04 , level:6 , wallet_address: req.body.user_wallet ,status:"Missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res6.updateOne( {details:[...res6.details , { amount : value*0.04 , level:6 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res7 = await userChainModel.findOne({address : res6.refferralBy })
             if(!res7){
@@ -109,7 +109,7 @@ let plan_post_controller = async(req,res) =>{
             if(Number(parentMaxObject7.amount) >= Number(value)){
                 await res7.updateOne( {$inc:{bonus : value*0.03} , details:[...res7.details , { amount : value*0.03 , level:7 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res7.updateOne( {$inc:{bonus : value*0.03} , details:[...res7.details , { amount : value*0.03 , level:7 , wallet_address: req.body.user_wallet ,status:"Missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res7.updateOne( {details:[...res7.details , { amount : value*0.03 , level:7 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
 
             let res8 = await userChainModel.findOne({address : res7.refferralBy })
@@ -122,7 +122,7 @@ let plan_post_controller = async(req,res) =>{
             if(Number(parentMaxObject8.amount) >= Number(value)){
                 await res8.updateOne( {$inc:{bonus : value*0.02} , details:[...res8.details , { amount : value*0.02 , level:8 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res8.updateOne( {$inc:{bonus : value*0.02} , details:[...res8.details , { amount : value*0.02 , level:8 , wallet_address: req.body.user_wallet ,status:"Missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res8.updateOne( {details:[...res8.details , { amount : value*0.02 , level:8 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res9 = await userChainModel.findOne({address : res8.refferralBy })
             if(!res9){
@@ -134,7 +134,7 @@ let plan_post_controller = async(req,res) =>{
             if(Number(parentMaxObject9.amount) >= Number(value)){
                 await res9.updateOne( {$inc:{bonus : value*0.01} , details:[...res9.details , { amount : value*0.01 , level:9 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res9.updateOne( {$inc:{bonus : value*0.01} , details:[...res9.details , { amount : value*0.01 , level:9 , wallet_address: req.body.user_wallet ,status:"Missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res9.updateOne( {details:[...res9.details , { amount : value*0.01 , level:9 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             await parent_details.updateOne({total_profit:[...parent_details.total_profit , obj] , reffrals:(parent_details.reffrals + 1) }) ;
         }else{
@@ -161,7 +161,7 @@ let plan_post_controller = async(req,res) =>{
             if(Number(parentMaxObject1.amount) >= Number(value)){
                 await res1.updateOne( {$inc:{bonus : value*0.5} , details:[...res1.details , { amount : value*0.5 , level:1 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res1.updateOne( {$inc:{bonus : value*0.5} , details:[...res1.details , { amount : value*0.5 , level:1 , wallet_address: req.body.user_wallet ,status:"Missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res1.updateOne( {details:[...res1.details , { amount : value*0.5 , level:1 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res2 = await userChainModel.findOne({address : res1.refferralBy }) ;
             if(!res2){
@@ -173,7 +173,7 @@ let plan_post_controller = async(req,res) =>{
             if(Number(parentMaxObject2.amount) >= Number(value)){
                 await res2.updateOne( {$inc:{bonus : value*0.2} , details:[...res2.details , { amount : value*0.2 , level:2 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res2.updateOne( {$inc:{bonus : value*0.2} , details:[...res2.details , { amount : value*0.2 , level:2 , wallet_address: req.body.user_wallet ,status:"Missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res2.updateOne( {details:[...res2.details , { amount : value*0.2 , level:2 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res3 = await userChainModel.findOne({address : res2.refferralBy }) ;
             if(!res3){
@@ -185,7 +185,7 @@ let plan_post_controller = async(req,res) =>{
             if(Number(parentMaxObject3.amount) >= Number(value)){
                 await res3.updateOne( {$inc:{bonus : value*0.1} , details:[...res3.details , { amount : value*0.1 , level:3 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res3.updateOne( {$inc:{bonus : value*0.1} , details:[...res3.details , { amount : value*0.1 , level:3 , wallet_address: req.body.user_wallet ,status:"Missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res3.updateOne( {details:[...res3.details , { amount : value*0.1 , level:3 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res4 = await userChainModel.findOne({address : res3.refferralBy })
             if(!res4){
@@ -197,7 +197,7 @@ let plan_post_controller = async(req,res) =>{
             if(Number(parentMaxObject4.amount) >= Number(value)){
                 await res4.updateOne( {$inc:{bonus : value*0.05} , details:[...res4.details , { amount : value*0.05 , level:4 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res4.updateOne( {$inc:{bonus : value*0.05} , details:[...res4.details , { amount : value*0.05 , level:4 , wallet_address: req.body.user_wallet ,status:"Missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res4.updateOne( {details:[...res4.details , { amount : value*0.05 , level:4 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res5 = await userChainModel.findOne({address : res4.refferralBy })
             if(!res5){
@@ -209,7 +209,7 @@ let plan_post_controller = async(req,res) =>{
             if(Number(parentMaxObject5.amount) >= Number(value)){
                 await res5.updateOne( {$inc:{bonus : value*0.05} , details:[...res5.details , { amount : value*0.05 , level:5 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res5.updateOne( {$inc:{bonus : value*0.05} , details:[...res5.details , { amount : value*0.05 , level:5 , wallet_address: req.body.user_wallet ,status:"Missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res5.updateOne( {details:[...res5.details , { amount : value*0.05 , level:5 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res6 = await userChainModel.findOne({address : res5.refferralBy })
             if(!res6){
@@ -221,7 +221,7 @@ let plan_post_controller = async(req,res) =>{
             if(Number(parentMaxObject6.amount) >= Number(value)){
                 await res6.updateOne( {$inc:{bonus : value*0.04} , details:[...res6.details , { amount : value*0.04 , level:6 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res6.updateOne( {$inc:{bonus : value*0.04} , details:[...res6.details , { amount : value*0.04 , level:6 , wallet_address: req.body.user_wallet ,status:"Missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res6.updateOne( {details:[...res6.details , { amount : value*0.04 , level:6 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res7 = await userChainModel.findOne({address : res6.refferralBy })
             if(!res7){
@@ -233,7 +233,7 @@ let plan_post_controller = async(req,res) =>{
             if(Number(parentMaxObject7.amount) >= Number(value)){
                 await res7.updateOne( {$inc:{bonus : value*0.03} , details:[...res7.details , { amount : value*0.03 , level:7 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res7.updateOne( {$inc:{bonus : value*0.03} , details:[...res7.details , { amount : value*0.03 , level:7 , wallet_address: req.body.user_wallet ,status:"Missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res7.updateOne( {details:[...res7.details , { amount : value*0.03 , level:7 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
 
             let res8 = await userChainModel.findOne({address : res7.refferralBy })
@@ -246,7 +246,7 @@ let plan_post_controller = async(req,res) =>{
             if(Number(parentMaxObject8.amount) >= Number(value)){
                 await res8.updateOne( {$inc:{bonus : value*0.02} , details:[...res8.details , { amount : value*0.02 , level:8 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res8.updateOne( {$inc:{bonus : value*0.02} , details:[...res8.details , { amount : value*0.02 , level:8 , wallet_address: req.body.user_wallet ,status:"Missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res8.updateOne( {details:[...res8.details , { amount : value*0.02 , level:8 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res9 = await userChainModel.findOne({address : res8.refferralBy })
             if(!res9){
@@ -258,7 +258,7 @@ let plan_post_controller = async(req,res) =>{
             if(Number(parentMaxObject9.amount) >= Number(value)){
                 await res9.updateOne( {$inc:{bonus : value*0.01} , details:[...res9.details , { amount : value*0.01 , level:9 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res9.updateOne( {$inc:{bonus : value*0.01} , details:[...res9.details , { amount : value*0.01 , level:9 , wallet_address: req.body.user_wallet ,status:"Missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res9.updateOne( {details:[...res9.details , { amount : value*0.01 , level:9 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             await parent_details.updateOne({total_profit:[...parent_details.total_profit , obj]}) ;
         }
@@ -307,4 +307,19 @@ let plandelete = async (req, res) => {
 
 }
 
-export { plan_post_controller , plan_get_controller , plandelete , plan_get_byamount_controller , get_profit_by_user}
+let planUpdateController = async (req, res) => {
+    try {
+        let data = await planModel.find({__v:0})
+        for(let i = 0; i < data.length; i++){
+            if(data[i].buyed_plan.length===3){
+                await data[i].updateOne({buyed_plan:[{amount:"50"},{amount:"100"},{amount:"200"}]})
+                //console.log(data[i])
+            }
+        }
+        res.send({message :"success" })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export { plan_post_controller , plan_get_controller , plandelete , plan_get_byamount_controller , get_profit_by_user , planUpdateController}
