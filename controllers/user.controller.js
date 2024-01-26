@@ -67,12 +67,12 @@ let users_getAllDetails_controller = async (req,res)=>{
          let sum = arr.reduce((acc,cv)=> acc + cv.profit , 0);
          return res.send({message:"No recent profit available" , data:{total_profit:sum , recent_profit:0 , recent_reffrals:0 , user_id:resp.user_id , wallet_address:resp.address , parent_address : resp.parent_wallet_address , total_profit_array:resp.total_profit}})
         }
-        let total_sum = total.total_profit.reduce((acc,cv)=> acc + cv.profit , 0);
+        let total_sum = total.total_profit.reduce((acc,cv)=> Number(acc) + Number(cv.profit) , 0);
         let arr = flag.total_profit
-        let sum = arr.reduce((acc,cv)=> acc + cv.profit , 0);
+        let sum = arr.reduce((acc,cv)=> Number(acc) + Number(cv.profit) , 0);
         let response = {
-            total_profit:total_sum,
-            recent_profit : sum,
+            total_profit:parseFloat(total_sum).toFixed(3),
+            recent_profit : parseFloat(sum).toFixed(3),
             recent_reffrals : arr.length,
             total_reffrals : arr.length,
             user_id : flag.user_id,

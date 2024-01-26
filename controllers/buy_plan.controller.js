@@ -11,6 +11,7 @@ let plan_post_controller = async(req,res) =>{
         }
         let value = req.body.buyed_plan[0].amount
         value = value - (value*(0.15))
+        value = parseFloat(value).toFixed(3)
         let profit = value*(0.5)
         let flag = await planModel.findOne({user_wallet:req.body.user_wallet , parent_wallet_id:req.body.parent_wallet_id});
         if(!flag){
@@ -18,7 +19,7 @@ let plan_post_controller = async(req,res) =>{
             await user.save()
             let obj = {
                 time: new Date(),
-                profit: profit,
+                profit: parseFloat(profit).toFixed(3),
                 user_wallet: req.body.user_wallet,
                 user_id: req.body.user_id
             }
@@ -35,9 +36,9 @@ let plan_post_controller = async(req,res) =>{
             let ParentAmountObject1 = await planModel.findOne({user_wallet:req.body.parent_wallet_id})
             let parentMaxObject1= ParentAmountObject1.buyed_plan.reduce((max , cv) => (parseInt(cv.amount , 10) > parseInt(max.amount , 10) ? cv : max) , ParentAmountObject1.buyed_plan[0] )
             if(Number(parentMaxObject1.amount) >= Number(value)){
-                await res1.updateOne( {$inc:{bonus : value*0.5} , details:[...res1.details , { amount : value*0.5 , level:1 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
+                await res1.updateOne( {$inc:{bonus : parseFloat(value*0.5).toFixed(3)} , details:[...res1.details , { amount : parseFloat(value*0.5).toFixed(3) , level:1 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res1.updateOne( {details:[...res1.details , { amount : value*0.5 , level:1 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res1.updateOne( {details:[...res1.details , { amount : parseFloat(value*0.5).toFixed(3) , level:1 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res2 = await userChainModel.findOne({address : res1.refferralBy }) ;
             if(!res2){
@@ -47,9 +48,9 @@ let plan_post_controller = async(req,res) =>{
             let ParentAmountObject2 = await planModel.findOne({user_wallet:res1.refferralBy})
             let parentMaxObject2= ParentAmountObject2.buyed_plan.reduce((max , cv) => (parseInt(cv.amount , 10) > parseInt(max.amount , 10) ? cv : max) , ParentAmountObject2.buyed_plan[0] )
             if(Number(parentMaxObject2.amount) >= Number(value)){
-                await res2.updateOne( {$inc:{bonus : value*0.2} , details:[...res2.details , { amount : value*0.2 , level:2 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
+                await res2.updateOne( {$inc:{bonus : parseFloat(value*0.2).toFixed(3)} , details:[...res2.details , { amount : parseFloat(value*0.2).toFixed(3) , level:2 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res2.updateOne( {details:[...res2.details , { amount : value*0.2 , level:2 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res2.updateOne( {details:[...res2.details , { amount : parseFloat(value*0.2).toFixed(3) , level:2 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res3 = await userChainModel.findOne({address : res2.refferralBy }) ;
             if(!res3){
@@ -59,9 +60,9 @@ let plan_post_controller = async(req,res) =>{
             let ParentAmountObject3 = await planModel.findOne({user_wallet:res2.refferralBy})
             let parentMaxObject3= ParentAmountObject3.buyed_plan.reduce((max , cv) => (parseInt(cv.amount , 10) > parseInt(max.amount , 10) ? cv : max) , ParentAmountObject3.buyed_plan[0] )
             if(Number(parentMaxObject3.amount) >= Number(value)){
-                await res3.updateOne( {$inc:{bonus : value*0.1} , details:[...res3.details , { amount : value*0.1 , level:3 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
+                await res3.updateOne( {$inc:{bonus : parseFloat(value*0.1).toFixed(3)} , details:[...res3.details , { amount : parseFloat(value*0.1).toFixed(3) , level:3 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res3.updateOne( {details:[...res3.details , { amount : value*0.1 , level:3 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res3.updateOne( {details:[...res3.details , { amount : parseFloat(value*0.1).toFixed(3) , level:3 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res4 = await userChainModel.findOne({address : res3.refferralBy })
             if(!res4){
@@ -71,9 +72,9 @@ let plan_post_controller = async(req,res) =>{
             let ParentAmountObject4 = await planModel.findOne({user_wallet:res3.refferralBy})
             let parentMaxObject4= ParentAmountObject4.buyed_plan.reduce((max , cv) => (parseInt(cv.amount , 10) > parseInt(max.amount , 10) ? cv : max) , ParentAmountObject4.buyed_plan[0] )
             if(Number(parentMaxObject4.amount) >= Number(value)){
-                await res4.updateOne( {$inc:{bonus : value*0.05} , details:[...res4.details , { amount : value*0.05 , level:4 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
+                await res4.updateOne( {$inc:{bonus : parseFloat(value*0.05).toFixed(3)} , details:[...res4.details , { amount : parseFloat(value*0.05).toFixed(3) , level:4 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res4.updateOne( {details:[...res4.details , { amount : value*0.05 , level:4 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res4.updateOne( {details:[...res4.details , { amount : parseFloat(value*0.05).toFixed(3) , level:4 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res5 = await userChainModel.findOne({address : res4.refferralBy })
             if(!res5){
@@ -83,9 +84,9 @@ let plan_post_controller = async(req,res) =>{
             let ParentAmountObject5 = await planModel.findOne({user_wallet:res4.refferralBy})
             let parentMaxObject5= ParentAmountObject5.buyed_plan.reduce((max , cv) => (parseInt(cv.amount , 10) > parseInt(max.amount , 10) ? cv : max) , ParentAmountObject5.buyed_plan[0] )
             if(Number(parentMaxObject5.amount) >= Number(value)){
-                await res5.updateOne( {$inc:{bonus : value*0.05} , details:[...res5.details , { amount : value*0.05 , level:5 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
+                await res5.updateOne( {$inc:{bonus : parseFloat(value*0.05).toFixed(3)} , details:[...res5.details , { amount : parseFloat(value*0.05).toFixed(3) , level:5 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res5.updateOne( {details:[...res5.details , { amount : value*0.05 , level:5 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res5.updateOne( {details:[...res5.details , { amount : parseFloat(value*0.05).toFixed(3) , level:5 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res6 = await userChainModel.findOne({address : res5.refferralBy })
             if(!res6){
@@ -95,9 +96,9 @@ let plan_post_controller = async(req,res) =>{
             let ParentAmountObject6 = await planModel.findOne({user_wallet:res5.refferralBy})
             let parentMaxObject6= ParentAmountObject6.buyed_plan.reduce((max , cv) => (parseInt(cv.amount , 10) > parseInt(max.amount , 10) ? cv : max) , ParentAmountObject6.buyed_plan[0] )
             if(Number(parentMaxObject6.amount) >= Number(value)){
-                await res6.updateOne( {$inc:{bonus : value*0.04} , details:[...res6.details , { amount : value*0.04 , level:6 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
+                await res6.updateOne( {$inc:{bonus : parseFloat(value*0.04).toFixed(3)} , details:[...res6.details , { amount : parseFloat(value*0.04).toFixed(3) , level:6 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res6.updateOne( {details:[...res6.details , { amount : value*0.04 , level:6 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res6.updateOne( {details:[...res6.details , { amount : parseFloat(value*0.04).toFixed(3) , level:6 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res7 = await userChainModel.findOne({address : res6.refferralBy })
             if(!res7){
@@ -107,9 +108,9 @@ let plan_post_controller = async(req,res) =>{
             let ParentAmountObject7 = await planModel.findOne({user_wallet:res6.refferralBy})
             let parentMaxObject7= ParentAmountObject7.buyed_plan.reduce((max , cv) => (parseInt(cv.amount , 10) > parseInt(max.amount , 10) ? cv : max) , ParentAmountObject7.buyed_plan[0] )
             if(Number(parentMaxObject7.amount) >= Number(value)){
-                await res7.updateOne( {$inc:{bonus : value*0.03} , details:[...res7.details , { amount : value*0.03 , level:7 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
+                await res7.updateOne( {$inc:{bonus : parseFloat(value*0.03).toFixed(3)} , details:[...res7.details , { amount : parseFloat(value*0.03).toFixed(3) , level:7 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res7.updateOne( {details:[...res7.details , { amount : value*0.03 , level:7 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res7.updateOne( {details:[...res7.details , { amount : parseFloat(value*0.03).toFixed(3) , level:7 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
 
             let res8 = await userChainModel.findOne({address : res7.refferralBy })
@@ -120,9 +121,9 @@ let plan_post_controller = async(req,res) =>{
             let ParentAmountObject8 = await planModel.findOne({user_wallet:res7.refferralBy})
             let parentMaxObject8= ParentAmountObject8.buyed_plan.reduce((max , cv) => (parseInt(cv.amount , 10) > parseInt(max.amount , 10) ? cv : max) , ParentAmountObject8.buyed_plan[0] )
             if(Number(parentMaxObject8.amount) >= Number(value)){
-                await res8.updateOne( {$inc:{bonus : value*0.02} , details:[...res8.details , { amount : value*0.02 , level:8 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
+                await res8.updateOne( {$inc:{bonus : parseFloat(value*0.02).toFixed(3)} , details:[...res8.details , { amount : parseFloat(value*0.02).toFixed(3) , level:8 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res8.updateOne( {details:[...res8.details , { amount : value*0.02 , level:8 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res8.updateOne( {details:[...res8.details , { amount : parseFloat(value*0.02).toFixed(3) , level:8 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res9 = await userChainModel.findOne({address : res8.refferralBy })
             if(!res9){
@@ -132,9 +133,9 @@ let plan_post_controller = async(req,res) =>{
             let ParentAmountObject9 = await planModel.findOne({user_wallet:res8.refferralBy})
             let parentMaxObject9= ParentAmountObject9.buyed_plan.reduce((max , cv) => (parseInt(cv.amount , 10) > parseInt(max.amount , 10) ? cv : max) , ParentAmountObject9.buyed_plan[0] )
             if(Number(parentMaxObject9.amount) >= Number(value)){
-                await res9.updateOne( {$inc:{bonus : value*0.01} , details:[...res9.details , { amount : value*0.01 , level:9 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
+                await res9.updateOne( {$inc:{bonus : parseFloat(value*0.01).toFixed(3)} , details:[...res9.details , { amount : parseFloat(value*0.01).toFixed(3) , level:9 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res9.updateOne( {details:[...res9.details , { amount : value*0.01 , level:9 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res9.updateOne( {details:[...res9.details , { amount : parseFloat(value*0.01).toFixed(3) , level:9 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             await parent_details.updateOne({total_profit:[...parent_details.total_profit , obj] , reffrals:(parent_details.reffrals + 1) }) ;
         }else{
@@ -142,7 +143,7 @@ let plan_post_controller = async(req,res) =>{
             await flag.updateOne({buyed_plan:[...flag.buyed_plan , ...req.body.buyed_plan]}) ;
             let obj = {
                 time: new Date() ,
-                profit: profit,
+                profit: parseFloat(profit).toFixed(3),
                 user_wallet: req.body.user_wallet,
                 user_id: req.body.user_id
             }
@@ -159,9 +160,9 @@ let plan_post_controller = async(req,res) =>{
             let ParentAmountObject1 = await planModel.findOne({user_wallet:req.body.parent_wallet_id})
             let parentMaxObject1= ParentAmountObject1.buyed_plan.reduce((max , cv) => (parseInt(cv.amount , 10) > parseInt(max.amount , 10) ? cv : max) , ParentAmountObject1.buyed_plan[0] )
             if(Number(parentMaxObject1.amount) >= Number(value)){
-                await res1.updateOne( {$inc:{bonus : value*0.5} , details:[...res1.details , { amount : value*0.5 , level:1 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
+                await res1.updateOne( {$inc:{bonus : parseFloat(value*0.5).toFixed(3)} , details:[...res1.details , { amount : parseFloat(value*0.5).toFixed(3) , level:1 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res1.updateOne( {details:[...res1.details , { amount : value*0.5 , level:1 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res1.updateOne( {details:[...res1.details , { amount : parseFloat(value*0.5).toFixed(3) , level:1 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res2 = await userChainModel.findOne({address : res1.refferralBy }) ;
             if(!res2){
@@ -171,9 +172,9 @@ let plan_post_controller = async(req,res) =>{
             let ParentAmountObject2 = await planModel.findOne({user_wallet:res1.refferralBy})
             let parentMaxObject2= ParentAmountObject2.buyed_plan.reduce((max , cv) => (parseInt(cv.amount , 10) > parseInt(max.amount , 10) ? cv : max) , ParentAmountObject2.buyed_plan[0] )
             if(Number(parentMaxObject2.amount) >= Number(value)){
-                await res2.updateOne( {$inc:{bonus : value*0.2} , details:[...res2.details , { amount : value*0.2 , level:2 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
+                await res2.updateOne( {$inc:{bonus : parseFloat(value*0.2).toFixed(3)} , details:[...res2.details , { amount : parseFloat(value*0.2).toFixed(3) , level:2 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res2.updateOne( {details:[...res2.details , { amount : value*0.2 , level:2 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res2.updateOne( {details:[...res2.details , { amount : parseFloat(value*0.2).toFixed(3) , level:2 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res3 = await userChainModel.findOne({address : res2.refferralBy }) ;
             if(!res3){
@@ -183,9 +184,9 @@ let plan_post_controller = async(req,res) =>{
             let ParentAmountObject3 = await planModel.findOne({user_wallet:res2.refferralBy})
             let parentMaxObject3= ParentAmountObject3.buyed_plan.reduce((max , cv) => (parseInt(cv.amount , 10) > parseInt(max.amount , 10) ? cv : max) , ParentAmountObject3.buyed_plan[0] )
             if(Number(parentMaxObject3.amount) >= Number(value)){
-                await res3.updateOne( {$inc:{bonus : value*0.1} , details:[...res3.details , { amount : value*0.1 , level:3 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
+                await res3.updateOne( {$inc:{bonus : parseFloat(value*0.1).toFixed(3)} , details:[...res3.details , { amount : parseFloat(value*0.1).toFixed(3) , level:3 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res3.updateOne( {details:[...res3.details , { amount : value*0.1 , level:3 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res3.updateOne( {details:[...res3.details , { amount : parseFloat(value*0.1).toFixed(3) , level:3 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res4 = await userChainModel.findOne({address : res3.refferralBy })
             if(!res4){
@@ -195,9 +196,9 @@ let plan_post_controller = async(req,res) =>{
             let ParentAmountObject4 = await planModel.findOne({user_wallet:res3.refferralBy})
             let parentMaxObject4= ParentAmountObject4.buyed_plan.reduce((max , cv) => (parseInt(cv.amount , 10) > parseInt(max.amount , 10) ? cv : max) , ParentAmountObject4.buyed_plan[0] )
             if(Number(parentMaxObject4.amount) >= Number(value)){
-                await res4.updateOne( {$inc:{bonus : value*0.05} , details:[...res4.details , { amount : value*0.05 , level:4 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
+                await res4.updateOne( {$inc:{bonus : parseFloat(value*0.05).toFixed(3)} , details:[...res4.details , { amount : parseFloat(value*0.05).toFixed(3) , level:4 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res4.updateOne( {details:[...res4.details , { amount : value*0.05 , level:4 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res4.updateOne( {details:[...res4.details , { amount : parseFloat(value*0.05).toFixed(3) , level:4 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res5 = await userChainModel.findOne({address : res4.refferralBy })
             if(!res5){
@@ -207,9 +208,9 @@ let plan_post_controller = async(req,res) =>{
             let ParentAmountObject5 = await planModel.findOne({user_wallet:res4.refferralBy})
             let parentMaxObject5= ParentAmountObject5.buyed_plan.reduce((max , cv) => (parseInt(cv.amount , 10) > parseInt(max.amount , 10) ? cv : max) , ParentAmountObject5.buyed_plan[0] )
             if(Number(parentMaxObject5.amount) >= Number(value)){
-                await res5.updateOne( {$inc:{bonus : value*0.05} , details:[...res5.details , { amount : value*0.05 , level:5 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
+                await res5.updateOne( {$inc:{bonus : parseFloat(value*0.05).toFixed(3)} , details:[...res5.details , { amount : parseFloat(value*0.05).toFixed(3) , level:5 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res5.updateOne( {details:[...res5.details , { amount : value*0.05 , level:5 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res5.updateOne( {details:[...res5.details , { amount : parseFloat(value*0.05).toFixed(3) , level:5 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res6 = await userChainModel.findOne({address : res5.refferralBy })
             if(!res6){
@@ -219,9 +220,9 @@ let plan_post_controller = async(req,res) =>{
             let ParentAmountObject6 = await planModel.findOne({user_wallet:res5.refferralBy})
             let parentMaxObject6= ParentAmountObject6.buyed_plan.reduce((max , cv) => (parseInt(cv.amount , 10) > parseInt(max.amount , 10) ? cv : max) , ParentAmountObject6.buyed_plan[0] )
             if(Number(parentMaxObject6.amount) >= Number(value)){
-                await res6.updateOne( {$inc:{bonus : value*0.04} , details:[...res6.details , { amount : value*0.04 , level:6 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
+                await res6.updateOne( {$inc:{bonus : parseFloat(value*0.04).toFixed(3)} , details:[...res6.details , { amount : parseFloat(value*0.04).toFixed(3) , level:6 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res6.updateOne( {details:[...res6.details , { amount : value*0.04 , level:6 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res6.updateOne( {details:[...res6.details , { amount : parseFloat(value*0.04).toFixed(3) , level:6 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res7 = await userChainModel.findOne({address : res6.refferralBy })
             if(!res7){
@@ -231,9 +232,9 @@ let plan_post_controller = async(req,res) =>{
             let ParentAmountObject7 = await planModel.findOne({user_wallet:res6.refferralBy})
             let parentMaxObject7= ParentAmountObject7.buyed_plan.reduce((max , cv) => (parseInt(cv.amount , 10) > parseInt(max.amount , 10) ? cv : max) , ParentAmountObject7.buyed_plan[0] )
             if(Number(parentMaxObject7.amount) >= Number(value)){
-                await res7.updateOne( {$inc:{bonus : value*0.03} , details:[...res7.details , { amount : value*0.03 , level:7 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
+                await res7.updateOne( {$inc:{bonus : parseFloat(value*0.03).toFixed(3)} , details:[...res7.details , { amount : parseFloat(value*0.03).toFixed(3) , level:7 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res7.updateOne( {details:[...res7.details , { amount : value*0.03 , level:7 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res7.updateOne( {details:[...res7.details , { amount : parseFloat(value*0.03).toFixed(3) , level:7 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
 
             let res8 = await userChainModel.findOne({address : res7.refferralBy })
@@ -244,9 +245,9 @@ let plan_post_controller = async(req,res) =>{
             let ParentAmountObject8 = await planModel.findOne({user_wallet:res7.refferralBy})
             let parentMaxObject8= ParentAmountObject8.buyed_plan.reduce((max , cv) => (parseInt(cv.amount , 10) > parseInt(max.amount , 10) ? cv : max) , ParentAmountObject8.buyed_plan[0] )
             if(Number(parentMaxObject8.amount) >= Number(value)){
-                await res8.updateOne( {$inc:{bonus : value*0.02} , details:[...res8.details , { amount : value*0.02 , level:8 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
+                await res8.updateOne( {$inc:{bonus : parseFloat(value*0.02).toFixed(3)} , details:[...res8.details , { amount : parseFloat(value*0.02).toFixed(3) , level:8 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res8.updateOne( {details:[...res8.details , { amount : value*0.02 , level:8 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res8.updateOne( {details:[...res8.details , { amount : parseFloat(value*0.02).toFixed(3) , level:8 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             let res9 = await userChainModel.findOne({address : res8.refferralBy })
             if(!res9){
@@ -256,9 +257,9 @@ let plan_post_controller = async(req,res) =>{
             let ParentAmountObject9 = await planModel.findOne({user_wallet:res8.refferralBy})
             let parentMaxObject9= ParentAmountObject9.buyed_plan.reduce((max , cv) => (parseInt(cv.amount , 10) > parseInt(max.amount , 10) ? cv : max) , ParentAmountObject9.buyed_plan[0] )
             if(Number(parentMaxObject9.amount) >= Number(value)){
-                await res9.updateOne( {$inc:{bonus : value*0.01} , details:[...res9.details , { amount : value*0.01 , level:9 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
+                await res9.updateOne( {$inc:{bonus : parseFloat(value*0.01).toFixed(3)} , details:[...res9.details , { amount : parseFloat(value*0.01).toFixed(3) , level:9 , wallet_address: req.body.user_wallet , user_id : req.body.user_id , time : new Date()}]}) ;
             }else{
-                await res9.updateOne( {details:[...res9.details , { amount : value*0.01 , level:9 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
+                await res9.updateOne( {details:[...res9.details , { amount : parseFloat(value*0.01).toFixed(3) , level:9 , wallet_address: req.body.user_wallet ,status:"missed", user_id : req.body.user_id , time : new Date()}]}) ;
             }
             await parent_details.updateOne({total_profit:[...parent_details.total_profit , obj]}) ;
         }
@@ -308,15 +309,17 @@ let plandelete = async (req, res) => {
 }
 
 let planUpdateController = async (req, res) => {
+     //'total_profit':{ $gt: {'time': new Date(Date.now() - 24*60*60 * 1000) }}
+     //console.log(new Date());
     try {
-        let data = await planModel.find({__v:0})
-        for(let i = 0; i < data.length; i++){
-            if(data[i].buyed_plan.length===3){
-                await data[i].updateOne({buyed_plan:[{amount:"50"},{amount:"100"},{amount:"200"}]})
-                //console.log(data[i])
-            }
-        }
-        res.send({message :"success" })
+        let data = await planModel.find({'createdAt':{$gte: new Date("2024-01-25T13:44:52.722+00:00") , $lte: new Date()}})
+        // for(let i = 0; i < data.length; i++){
+        //     if(data[i].buyed_plan.length===1){
+        //         await data[i].updateOne({buyed_plan:[{amount:"50"}]})
+        //         //console.log(data[i])
+        //     }
+        // }
+        res.send({message :"success" , data : data})
     } catch (error) {
         console.log(error);
     }

@@ -14,7 +14,8 @@ app.get('/' , (req , res)=>{
     console.log(new Date())
     res.send({message:"Hello welcome to the home page!"});
 })
-
+let str='021.250'
+console.log()
 app.use('/v1', userroute);
 app.use('/v1' , plan_buyRouter);
 app.use('/profile',profile_router)
